@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    FILE *archivo;
+    int edad;
+    float salario;
+
+    // Apertura para escritura
+    archivo = fopen("datos.txt", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    fprintf(archivo, "Edad: %d\nSalario: %.2f\n", 30, 2500.75);
+    fclose(archivo);
+
+    // Apertura para lectura
+    archivo = fopen("datos.txt", "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    fscanf(archivo, "Edad: %d\nSalario: %f\n", &edad, &salario);
+    printf("Edad leída: %d\nSalario leído: %.2f\n", edad, salario);
+    fclose(archivo);
+
+    return 0;
+}
