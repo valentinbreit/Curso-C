@@ -1,0 +1,6 @@
+int edad;
+float salario;
+char inicial;
+
+printf("Ingrese su edad, salario e inicial: ");
+scanf("%d %f %c", &edad, &salario, &inicial);
