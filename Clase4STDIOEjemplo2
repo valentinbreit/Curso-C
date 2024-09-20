@@ -1,0 +1,9 @@
+int edad = 25;
+float salario = 1234.56;
+char inicial = 'A';
+char nombre[] = "Juan";
+
+printf("Nombre: %s\n", nombre);
+printf("Edad: %d años\n", edad);
+printf("Salario: $%.2f\n", salario);
+printf("Inicial: %c\n", inicial);
