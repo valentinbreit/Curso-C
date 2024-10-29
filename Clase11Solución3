@@ -1,0 +1,3 @@
+void cambiarEdad(struct Persona *p, int nuevaEdad) {
+    p->edad = nuevaEdad;
+}
