@@ -1,0 +1,6 @@
+struct Libro {
+    char titulo[50];
+    char autor[50];
+    int anio_publicacion;
+};
+struct Libro libro1 = {"C Programming Language", "K&R", 1978};
