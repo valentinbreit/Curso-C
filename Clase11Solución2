@@ -1,0 +1,16 @@
+struct Fecha {
+    int dia;
+    int mes;
+    int anio;
+};
+
+struct Evento {
+    char nombre[50];
+    struct Fecha fecha_evento;
+};
+
+struct Evento evento1;
+printf("Ingrese nombre del evento: ");
+scanf("%s", evento1.nombre);
+printf("Ingrese día, mes y año del evento: ");
+scanf("%d %d %d", &evento1.fecha_evento.dia, &evento1.fecha_evento.mes, &evento1.fecha_evento.anio);
