@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_NOMBRE 50
+
+int main() {
+    FILE *archivo;
+    char nombre[MAX_NOMBRE];
+    int edad, opcion;
+
+    // Apertura del archivo en modo escritura ("a" para agregar datos)
+    archivo = fopen("personas.txt", "a");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    // Guardar nombres y edades en el archivo
+    do {
+        printf("Ingrese el nombre: ");
+        scanf(" %49[^\n]", nombre); // Lee hasta 49 caracteres o un salto de línea
+        printf("Ingrese la edad: ");
+        scanf("%d", &edad);
+
+        fprintf(archivo, "%s,%d\n", nombre, edad); // Escribir en el archivo en formato CSV
+
+        printf("¿Desea agregar otra persona? (1: Sí, 0: No): ");
+        scanf("%d", &opcion);
+    } while (opcion == 1);
+
+    fclose(archivo); // Cerrar el archivo después de escribir
+
+    // Reabrir el archivo en modo lectura
+    archivo = fopen("personas.txt", "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    printf("\nLista de personas:\n");
+    // Leer nombres y edades del archivo e imprimirlos
+    while (fscanf(archivo, " %49[^,],%d\n", nombre, &edad) == 2) {
+        printf("%s - %d\n", nombre, edad);
+    }
+
+    fclose(archivo); // Cerrar el archivo después de leer
+    return 0;
+}
