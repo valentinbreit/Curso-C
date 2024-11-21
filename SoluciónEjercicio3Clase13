@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    FILE *archivo;
+    int numero, grupo, grupoActual, total, totalGeneral, cantidadGrupo;
+    
+    // Abrir archivo para escritura
+    archivo = fopen("datos.txt", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    // Entrada estándar: capturar datos
+    printf("Ingresa números y sus grupos (999 para terminar):\n");
+    while (1) {
+        printf("Número: ");
+        scanf("%d", &numero);
+        if (numero == 999) break;
+        printf("Grupo: ");
+        scanf("%d", &grupo);
+        fprintf(archivo, "%d %d\n", numero, grupo);
+    }
+    fclose(archivo); // Cerrar archivo tras escritura
+
+    // Abrir archivo para lectura
+    archivo = fopen("datos.txt", "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    // Inicializar variables
+    totalGeneral = 0;
+    printf("\nTotales por grupo:\n");
+    grupoActual = -1;
+    total = 0;
+    cantidadGrupo = 0;
+
+    // Lectura con corte de control
+    while (fscanf(archivo, "%d %d", &numero, &grupo) != EOF) {
+        if (grupo != grupoActual) {
+            if (grupoActual != -1) {
+                // Mostrar total y promedio del grupo anterior
+                float promedio = (float)total / cantidadGrupo;
+                printf("Grupo %d: Total = %d, Promedio = %.2f\n", grupoActual, total, promedio);
+            }
+            grupoActual = grupo;
+            total = 0; // Reiniciar total para el nuevo grupo
+            cantidadGrupo = 0; // Reiniciar la cantidad de elementos del grupo
+        }
+        total += numero;       // Sumar al total del grupo
+        cantidadGrupo++;       // Incrementar el contador de elementos en el grupo
+        totalGeneral += numero; // Acumular el total general
+    }
+
+    // Imprimir el último grupo
+    if (grupoActual != -1) {
+        float promedio = (float)total / cantidadGrupo;
+        printf("Grupo %d: Total = %d, Promedio = %.2f\n", grupoActual, total, promedio);
+    }
+
+    // Imprimir el total general
+    printf("\nTotal General: %d\n", totalGeneral);
+
+    fclose(archivo); // Cerrar archivo tras lectura
+    return 0;
+}
