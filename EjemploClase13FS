@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    FILE *archivo;
+    int numero, grupo, grupoActual, total;
+    
+    // Abrir archivo para escritura
+    archivo = fopen("datos.txt", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    // Entrada estándar: capturar datos
+    printf("Ingresa números y sus grupos (999 para terminar):\n");
+    while (1) {
+        printf("Número: ");
+        scanf("%d", &numero);
+        if (numero == 999) break;
+        printf("Grupo: ");
+        scanf("%d", &grupo);
+        fprintf(archivo, "%d %d\n", numero, grupo);
+    }
+    fclose(archivo); // Cerrar archivo tras escritura
+
+    // Abrir archivo para lectura
+    archivo = fopen("datos.txt", "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+
+    // Lectura con corte de control
+    printf("\nTotales por grupo:\n");
+    total = 0;
+    grupoActual = -1;
+    while (fscanf(archivo, "%d %d", &numero, &grupo) != EOF) {
+        if (grupo != grupoActual) { 
+            if (grupoActual != -1) {
+                printf("Grupo %d: Total = %d\n", grupoActual, total);
+            }
+            grupoActual = grupo;
+            total = 0; // Reiniciar total para el nuevo grupo
+        }
+        total += numero;
+    }
+    // Imprimir el último grupo
+    if (grupoActual != -1) {
+        printf("Grupo %d: Total = %d\n", grupoActual, total);
+    }
+
+    fclose(archivo); // Cerrar archivo tras lectura
+    return 0;
+}
